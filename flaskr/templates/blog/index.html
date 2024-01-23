@@ -12,6 +12,9 @@
       <h1>
         {{ post['name'] }} in {{post['category']}} by {{post['username']}}
       </h1>
+      {% if g.user['id'] == post['author_id'] %}
+        <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+      {% endif %}
     </div>
   </header>
 </article>

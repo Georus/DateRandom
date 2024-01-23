@@ -4,8 +4,13 @@
 </head>
 <body>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-  <nav>
-    <h1>Flaskr</h1>
+  <nav class="bordered">
+    <div class="flex flex-row items-center navlinks spacex-2">
+      <h3 class="text">LoveRandomizer</h1>
+       <a href="/">Home</a>
+      <a href="/">Roll</a>
+      <a href="/">Develop</a>
+    </div>
     <ul>
       {% if g.user %}
       <li><span>{{ g.user['username'] }}</span></li>
