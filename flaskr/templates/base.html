@@ -6,10 +6,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   <nav class="bordered">
     <div class="flex flex-row items-center navlinks spacex-2">
-      <h3 class="text">LoveRandomizer</h1>
-       <a href="/">Home</a>
-      <a href="/">Roll</a>
-      <a href="/">Develop</a>
+      <h3 class="text">LoveRandomizer</h3>
+      <a href="{{ url_for('home.index') }}">Home</a>
+      <a href="{{ url_for('roll.index') }}">Roll</a>
+      <a href="{{ url_for('blog.index') }}">Develop</a>
     </div>
     <ul>
       {% if g.user %}
@@ -27,7 +27,8 @@
     <header>{% block header %}{% endblock %}</header>
     {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
-    {% endfor %} {% block content %}{% endblock %}
+    {% endfor %}
+    <main class="container mt-1">{% block content %}{% endblock %}</main>
   </section>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>

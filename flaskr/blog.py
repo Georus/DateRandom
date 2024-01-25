@@ -6,7 +6,7 @@ from werkzeug.exceptions import abort
 from flaskr.auth import login_required
 from flaskr.db import get_db
 
-bp = Blueprint('blog', __name__)
+bp = Blueprint('blog', __name__, url_prefix='/blog')
 
 
 @bp.route('/')
@@ -15,7 +15,8 @@ def index():
     posts = db.execute(
         '''
         SELECT name, category, username
-        FROM activities JOIN user ON activities.author_id = user.id;
+        FROM activities JOIN user ON activities.author_id = user.id
+        ORDER BY category;
         '''
     ).fetchall()
     return render_template('blog/index.html', posts=posts)

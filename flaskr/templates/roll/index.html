@@ -1,53 +1,25 @@
-{% extends 'base.html' %} 
-{% block header %}
+{% extends 'base.html' %} {% block header %}
 <h1>{% block title %}Activities{% endblock %}</h1>
+{% endblock %} {% block content %}
+<section class="grid columns-4to1 gap-2">
+  {% for act in acts %}
+  <div>
+    <h2>{{act['header']}}</h2>
+    <div class="card">
+      <div class="bg-gray flex flex-column justify-center">
+        <img
+          class="svg"
+          src="{{ url_for('static', filename='noodles.svg') }}"
+          alt="noodles img"
+        />
+      </div>
+      <div class="p-1">
+        <h4 class="text my-1">{{act['name']}}</h4>
+        <p class="text my-1">{{act['description']}}</p>
+      </div>
+    </div>
+    <a class="abtn primary my-1">Reroll</a>
+  </div>
+  {% endfor %}
+</section>
 {% endblock %}
-{% block content %}
-<main class="container mt-1">
-	<section>
-		<div class="grid columns-4to1 gap-2">
-			<div>
-				<h2>Show</h2>
-				<div class="card">
-	  				<div class="bg-gray flex flex-column justify-center">
-	  					<img class="svg" src="noodles.svg" alt="noodles img">
-	  				</div>
-	  				<div class="p-1">
-	  					<h4 class="text my-1">Show</h4>
-	  					<p class="text my-1">Description: Lorem ipsm dolor cuando fui al monte vi un conejito</p>
-	  				</div>
-  				</div>
-			</div>
-			<div>
-				<h2>Show</h2>
-				<div class="card">
-	  				<div class="bg-gray flex flex-column justify-center">
-	  					<img class="svg" src="noodles.svg" alt="noodles img">
-	  				</div>
-	  				<div class="p-1">
-	  					<h4 class="text my-1">Show</h4>
-	  					<p class="text my-1">Description: Lorem ipsm dolor cuando fui al monte vi un conejito</p>
-	  				</div>
-  				</div>
-			</div>
-  			<div class="card">
-  				<div class="bg-gray flex flex-column justify-center">
-  					<img class="svg" src="noodles.svg" alt="noodles img">
-  				</div>
-  				<h4 class="text">Show</h4>
-  				<p class="text">Description</p>
-  			</div>
-  			<div class="card">
-  				<div class="bg-gray flex flex-column justify-center">
-  					<img class="svg" src="noodles.svg" alt="noodles img">
-  				</div>
-  				<h4 class="text">Show</h4>
-  				<p class="text">Description</p>
-  			</div>
-		</div>
-		<a href="/" class="abtn primary my-1">Roll</a>
-	</section>
-</main>
-{% endblock %}
-
-
