@@ -1,21 +1,21 @@
 {% extends 'base.html' %} {% block header %}
-<h1>{% block title %}Activities{% endblock %}</h1>
+<h1 class="container">{% block title %}Activities{% endblock %}</h1>
 {% endblock %} {% block content %}
 <section class="grid columns-4to1 gap-2">
   {% for act in acts %}
   <div>
-    <h2>{{act['header']}}</h2>
+    <h2>{{act['hdr']}}</h2>
     <div class="card">
       <div class="bg-gray flex flex-column justify-center">
         <img
           class="svg"
-          src="{{ url_for('static', filename='noodles.svg') }}"
-          alt="noodles img"
+          src="{{ url_for('static', filename=act['img']) }}"
+          alt="{{act['img']}} img"
         />
       </div>
       <div class="p-1">
-        <h4 class="text my-1">{{act['name']}}</h4>
-        <p class="text my-1">{{act['description']}}</p>
+        <h4 class="text my-1">{{act['list']['name']}}</h4>
+        <p class="text my-1">{{act['list']['description']}}</p>
       </div>
     </div>
     <a class="abtn primary my-1">Reroll</a>

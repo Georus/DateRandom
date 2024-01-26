@@ -1,21 +1,30 @@
 {% extends 'base.html' %} {% block header %}
-<h1>{% block title %}Posts{% endblock %}</h1>
-{% if g.user %}
-<a class="action" href="{{ url_for('blog.create') }}">
-  <i data-lucide="plus-square"></i>
-  New
-</a>
-{% endif %} {% endblock %} {% block content %} {% for post in posts %}
-<article class="post">
-  <header>
+<h1 class="container">{% block title %}Activities edit{% endblock %}</h1>
+{% if g.user %} {% endif %} {% endblock %} {% block content %}
+<section>
+  <div class="grid columns-4to1 gap-2">
+    {% for column in columns %}
     <div>
-      <h1>
-        {{ post['name'] }} in {{post['category']}} by {{post['username']}}
-      </h1>
-      {% if g.user['id'] == post['author_id'] %}
-        <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
-      {% endif %}
+
+      <h3>{{column['hdr']}}</h3>
+      <ul>
+        {% for act in column['list'] %}
+        <li>
+          {{ act['name'] }} by {{act['username']}} {% if g.user['id'] ==
+          act['author_id'] %}
+          <a class="action" href="{{ url_for('blog.update', id=act['id']) }}">
+            Edit
+          </a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
     </div>
-  </header>
-</article>
-{% endfor %} {% endblock %}
+      {% endfor %}
+  </div>
+  <a class="abtn primary" href="{{ url_for('blog.create') }}">
+    <i data-lucide="plus-square" class="icons"></i>
+    <span class="mx-1">New</span>
+  </a>
+</section>
+{% endblock %}

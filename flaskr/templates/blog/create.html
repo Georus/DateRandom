@@ -1,20 +1,19 @@
 {% extends 'base.html' %} {% block header %}
 <h1>{% block title %}New Post{% endblock %}</h1>
 {% endblock %} {% block content %}
-<form method="post">
+<form class="width-50" method="post">
   <label for="title">Name</label>
-  <input name="name" id="title" value="{{ request.form['name'] }}" required />
+  <input class="form-control" name="name" id="title" value="{{ request.form['name'] }}" required />
   <label for="body">Description</label>
-  <textarea name="description" id="body">
+  <textarea class="form-control" name="description" id="body">
 {{ request.form['description'] }}
-</textarea
-  >
-  <select name="category">
+  </textarea>
+  <select class="form-select my-1" name="category">
     <option value="shows">Shows</option>
     <option value="dinners">Dinners</option>
     <option value="misc">Activities Misc</option>
     <option value="sexy">Sexy time</option>
   </select>
-  <input type="submit" value="Save" />
+  <input class="abtn primary my-1" type="submit" value="Save" />
 </form>
 {% endblock %}

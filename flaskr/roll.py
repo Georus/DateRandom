@@ -3,48 +3,58 @@ from flaskr.db import get_db
 
 bp = Blueprint('roll', __name__, url_prefix='/roll')
 
+    
 @bp.route('/')
 def index():
     db = get_db()
+    
     show = db.execute(
         '''
         SELECT name, description, category 
         FROM activities
-        WHERE category = 'shows';
+        WHERE category = 'shows'
+        ORDER by RANDOM()
+        LIMIT 1;
         '''
     ).fetchone()
+
     dinner = db.execute(
         '''
         SELECT name, description, category 
         FROM activities
-        WHERE category = 'dinners';
+        WHERE category = 'dinners'
+        ORDER by RANDOM()
+        LIMIT 1;
         '''
     ).fetchone()
     misc = db.execute(
         '''
         SELECT name, description, category 
         FROM activities
-        WHERE category = 'misc';
+        WHERE category = 'misc'
+        ORDER by RANDOM()
+        LIMIT 1;
         '''
     ).fetchone()
     sexy = db.execute(
         '''
         SELECT name, description, category 
         FROM activities
-        WHERE category = 'sexy';
+        WHERE category = 'sexy'
+        ORDER by RANDOM()
+        LIMIT 1;
         '''
     ).fetchone()
 
-    acts = [show, dinner, misc, sexy]
-    headers = ['Shows', 'Dinners', 'Miscellaneous', 'You know ;)']
-    dictacts = []
     
-    for i in range(4):
-        if acts[i] != None:
-            dictacts.append(dict(acts[i]))
-            dictacts[i]['header'] = headers[i]
+    showstemp = {'hdr': 'Shows', 'img': 'tv.svg', 'list' : show}
+    dinnerstemp = {'hdr': 'Dinners','img': 'noodles.svg', 'list' : dinner}
+    miscstemp = {'hdr': 'Miscellaneous', 'img': 'calendar.svg', 'list' : misc}
+    sexystemp = {'hdr': 'You know ;)', 'img': 'fire.svg', 'list' : sexy}
     
-    return render_template('roll/index.html', acts=dictacts)
+    acts = [showstemp, dinnerstemp, miscstemp, sexystemp]
+
+    return render_template('roll/index.html', acts=acts)
     
     
     
