@@ -3,14 +3,14 @@ from flaskr.db import get_db
 
 bp = Blueprint('roll', __name__, url_prefix='/roll')
 
-    
+
 @bp.route('/')
 def index():
     db = get_db()
-    
+
     show = db.execute(
         '''
-        SELECT name, description, category 
+        SELECT name, description, category
         FROM activities
         WHERE category = 'shows'
         ORDER by RANDOM()
@@ -20,7 +20,7 @@ def index():
 
     dinner = db.execute(
         '''
-        SELECT name, description, category 
+        SELECT name, description, category
         FROM activities
         WHERE category = 'dinners'
         ORDER by RANDOM()
@@ -29,7 +29,7 @@ def index():
     ).fetchone()
     misc = db.execute(
         '''
-        SELECT name, description, category 
+        SELECT name, description, category
         FROM activities
         WHERE category = 'misc'
         ORDER by RANDOM()
@@ -38,7 +38,7 @@ def index():
     ).fetchone()
     sexy = db.execute(
         '''
-        SELECT name, description, category 
+        SELECT name, description, category
         FROM activities
         WHERE category = 'sexy'
         ORDER by RANDOM()
@@ -46,15 +46,47 @@ def index():
         '''
     ).fetchone()
 
-    
+
     showstemp = {'hdr': 'Shows', 'img': 'tv.svg', 'list' : show}
     dinnerstemp = {'hdr': 'Dinners','img': 'noodles.svg', 'list' : dinner}
     miscstemp = {'hdr': 'Miscellaneous', 'img': 'calendar.svg', 'list' : misc}
     sexystemp = {'hdr': 'You know ;)', 'img': 'fire.svg', 'list' : sexy}
-    
+
     acts = [showstemp, dinnerstemp, miscstemp, sexystemp]
 
     return render_template('roll/index.html', acts=acts)
-    
-    
-    
+
+def actjson(category):
+    db = get_db()
+    show = db.execute(
+        '''
+        SELECT name, description, category
+        FROM activities
+        WHERE category = ?
+        ORDER by RANDOM()
+        LIMIT 1;
+        ''',
+        (category,)
+    ).fetchone()
+
+    return {
+        'name' : show['name'],
+        'desc' : show['description'],
+        }
+
+
+@bp.route('/getshows')
+def rollshow():
+    return actjson('shows')
+
+@bp.route('/getdinners')
+def rolldinner():
+    return actjson('dinners')
+
+@bp.route('/getmisc')
+def rollmisc():
+    return actjson('misc')
+
+@bp.route('/getsexy')
+def rollsexy():
+    return actjson('sexy')
