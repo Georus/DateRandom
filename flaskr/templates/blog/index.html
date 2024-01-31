@@ -1,11 +1,18 @@
 {% extends 'base.html' %} {% block header %}
-<h1 class="container">{% block title %}Activities edit{% endblock %}</h1>
+<h1 class="container title mt-2">
+  {% block title %}Activities edit{% endblock %}
+</h1>
 {% if g.user %} {% endif %} {% endblock %} {% block content %}
 <section>
-  <div class="grid columns-4to1 gap-2">
+  <div class="is-flex is-flex-direction-row is-justify-content-end">
+    <a class="button is-primary" href="{{ url_for('blog.create') }}">
+      <i data-lucide="plus-square" class="icons"></i>
+      <span class="mx-1">New</span>
+    </a>
+  </div>
+  <div class="columns">
     {% for column in columns %}
-    <div>
-
+    <div class="column">
       <h3>{{column['hdr']}}</h3>
       <ul>
         {% for act in column['list'] %}
@@ -20,11 +27,7 @@
         {% endfor %}
       </ul>
     </div>
-      {% endfor %}
+    {% endfor %}
   </div>
-  <a class="abtn primary" href="{{ url_for('blog.create') }}">
-    <i data-lucide="plus-square" class="icons"></i>
-    <span class="mx-1">New</span>
-  </a>
 </section>
 {% endblock %}

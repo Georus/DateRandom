@@ -1,58 +1,63 @@
 {% extends 'base.html' %} {% block header %}
-<h1 class="container">{% block title %}Activities{% endblock %}</h1>
+<h1 class="container title mt-2">{% block title %}Activities{% endblock %}</h1>
 {% endblock %} {% block content %}
 <script type="text/javascript">
-    function getReroll(name, desc, btn, dest) {
-        btn.addEventListener("click", () => {
-            fetch(dest)
-                .then((response) => {
-                    if (!response.ok) throw new Error("bad request");
-                    return response.json();
-                })
-                .then((data) => {
-                    name.textContent = data.name;
-                    desc.textContent = data.desc;
-                })
-                .catch((error) => console.error(error));
-        });
-    }
+  function getReroll(name, desc, btn, dest) {
+    btn.addEventListener("click", () => {
+      fetch(dest)
+        .then((response) => {
+          if (!response.ok) throw new Error("bad request");
+          return response.json();
+        })
+        .then((data) => {
+          name.textContent = data.name;
+          desc.textContent = data.desc;
+        })
+        .catch((error) => console.error(error));
+    });
+  }
 </script>
-<section class="columns-4to1 grid gap-2">
-    {% for act in acts %}
-    <div>
-        <h2>{{act['hdr']}}</h2>
-        <div class="card">
-            <div class="bg-gray flex-column flex justify-center">
-                <img
-                    class="svg"
-                    src="{{ url_for('static', filename=act['img']) }}"
-                    alt="{{act['img']}} img"
-                />
-            </div>
-            <div class="p-1">
-                <h4 class="text my-1" id="{{act['list']['category']}}name">
-                    {{act['list']['name']}}
-                </h4>
-                <p class="text my-1" id="{{act['list']['category']}}desc">
-                    {{act['list']['description']}}
-                </p>
-            </div>
+<section class="columns my-3">
+  {% for act in acts %}
+  <div class="column">
+    <h2 class="title is-4">{{act['hdr']}}</h2>
+    <div class="card">
+      <div class="card-image">
+        <figure class="image">
+          <img
+            src="{{ url_for('static', filename=act['img']) }}"
+            alt="{{act['img']}} img"
+          />
+        </figure>
+      </div>
+      <div class="card-content">
+        <div class="media-content">
+          <p class="title is-5" id="{{act['list']['category']}}name">
+            {{act['list']['name']}}
+          </p>
         </div>
-        <button
-            class="abtn primary my-1"
-            id="rollbtn{{act['list']['category']}}"
-        >
-            Reroll
-        </button>
-        <script type="text/javascript">
-            getReroll(
-                document.querySelector("#{{act['list']['category']}}name"),
-                document.querySelector("#{{act['list']['category']}}desc"),
-                document.querySelector("#rollbtn{{act['list']['category']}}"),
-                "{{ url_for('roll.index') }}get{{act['list']['category']}}",
-            );
-        </script>
+        <div class="content">
+          <p id="{{act['list']['category']}}desc">
+            {{act['list']['description']}}
+          </p>
+        </div>
+      </div>
     </div>
-    {% endfor %}
+    <button
+      class="button is-primary mt-1"
+      id="rollbtn{{act['list']['category']}}"
+    >
+      Reroll
+    </button>
+    <script type="text/javascript">
+      getReroll(
+        document.querySelector("#{{act['list']['category']}}name"),
+        document.querySelector("#{{act['list']['category']}}desc"),
+        document.querySelector("#rollbtn{{act['list']['category']}}"),
+        "{{ url_for('roll.index') }}get{{act['list']['category']}}"
+      );
+    </script>
+  </div>
+  {% endfor %}
 </section>
 {% endblock %}
